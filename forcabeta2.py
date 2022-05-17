@@ -23,6 +23,76 @@ with open('banco.txt', encoding='utf_8') as arquivo:
 
 nome = str(input('INFORME SEU NOME: ')).upper().strip()
 
+def forca_erro1():
+    print("  _______     ")
+    print(" |/      |    ")
+    print(" |      (_)   ")
+    print(" |            ")
+    print(" |            ")
+    print(" |            ")
+    print(" |            ")
+    print("_|___         ")
+
+def forca_erro2():
+    print("  _______     ")
+    print(" |/      |    ")
+    print(" |      (_)   ")
+    print(" |       |    ")
+    print(" |       |    ")
+    print(" |            ")
+    print(" |            ")
+    print("_|___         ")
+
+def forca_erro3():
+    print("  _______     ")
+    print(" |/      |    ")
+    print(" |      (_)   ")
+    print(" |      \|    ")
+    print(" |       |    ")
+    print(" |            ")
+    print(" |            ")
+    print("_|___         ")
+
+def forca_erro4():
+    print("  _______     ")
+    print(" |/      |    ")
+    print(" |      (_)   ")
+    print(" |      \|/   ")
+    print(" |       |    ")
+    print(" |            ")
+    print(" |            ")
+    print("_|___         ")
+
+def forca_erro5():
+    print("  _______     ")
+    print(" |/      |    ")
+    print(" |      (_)   ")
+    print(" |      \|/   ")
+    print(" |       |    ")
+    print(" |      /     ")
+    print(" |            ")
+    print("_|___         ")
+
+def forca_erro6():
+    print("  _______     ")
+    print(" |/      |    ")
+    print(" |      (_)   ")
+    print(" |      \|/   ")
+    print(" |       |    ")
+    print(" |      / \   ")
+    print(" |            ")
+    print("_|___         ")
+
+def forca_erro7():
+    print("  _______     ")
+    print(" |/      |    ")
+    print(" |      (_)   ")
+    print(" |     \ | /  ")
+    print(" |       |    ")
+    print(" |      / \   ")
+    print(" |            ")
+    print("_|___         ")
+
 
 def menu():
     print('>' * 20, 'UNIESP'.center(20), '<' * 20)
@@ -133,7 +203,20 @@ while tema != '0':
             print('Letras Corretas: {}'.format(corretas))
             print('Letras Erradas: {}'.format(erradas))
             erros += 1
+        if erros == 1:
+            forca_erro1()
+        elif erros == 2:
+            forca_erro2()
+        elif erros == 3:
+            forca_erro3()
+        elif erros == 4:
+            forca_erro4()
+        elif erros == 5:
+            forca_erro5()
+        elif erros == 6:
+            forca_erro6()                     
         if erros == 7:
+            forca_erro7()
             print('ENFORCADO! Você Perdeu!')
             print('PALAVRA era: {}'.format(palavra))
             continuar = str(input('Nova rodada? [S/N]: ')).upper().strip()
