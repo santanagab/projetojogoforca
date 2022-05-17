@@ -1,6 +1,7 @@
 from encodings import utf_8
 from random import random, choice
 
+# desenvolver o delete de cada palavra já jogada
 with open('frutas.txt', encoding='utf_8') as arquivo:
     linhas = arquivo.read()
     frutas = linhas.split()
@@ -96,7 +97,7 @@ while tema != '0':
             continuar = str(input('Nova Rodada? [S/N] ')).strip().upper()
             if continuar == 'S':
                 tipo = str(input('Deseja nova palavra [P] ou mudar de tema [T]? [P/T]: ')).strip().upper()  # terminar as próximas linhas com nova palavra e novo tema.
-                if tipo == 'P':
+                if tipo == 'P':  # falta desenvolver. só está aparecendo a partir do input de palpite
                     break
                 elif tipo == 'T':     # novo tema
                     menu()
