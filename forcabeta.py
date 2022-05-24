@@ -118,9 +118,13 @@ while tema != '0':
     elif tema == '0':
         print('Opção Escolhida: SAIR DO JOGO')
         print('Jogo encerrando...')
-        print('\033[33mJOGO ENCERRADO\033[m')    # colocar temporizador
+        sleep(0.5)
+        print('\033[33mJOGO ENCERRADO\033[m')
         break
     else:
+        pygame.mixer.init()
+        pygame.mixer.music.load('alert.mp3')
+        pygame.mixer.music.play()
         print('\033[31mOpção Inválida. Tente outra vez!\033[m')
         print('''
         [1] Frutas Nordestinas
