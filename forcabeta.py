@@ -2,20 +2,20 @@
 from random import choice
 import pygame
 from time import sleep
+import re
 
 # comando para importação das listas de palavras
 with open('frutas.txt', encoding='utf_8') as arquivo:
     linhas = arquivo.read()
     frutas = linhas.split()
+    
 with open('africa.txt', encoding='utf_8') as arquivo:
     linhas = arquivo.read()
     africa = linhas.split()
+
 with open('praias.txt', encoding='utf_8') as arquivo:
     linhas = arquivo.read()
     praias = linhas.split()   
-with open('banco.txt', encoding='utf_8') as arquivo:
-    linhas = arquivo.read()
-    banco = linhas.split()   
 
 nome = str(input('INFORME SEU NOME: ')).upper().strip()
 
@@ -73,6 +73,7 @@ def menu():
     pygame.mixer.init()
     pygame.mixer.music.load('menu.wav')
     pygame.mixer.music.play()
+    
     print('>' * 20, 'UNIESP'.center(20), '<' * 20)
     print('#'.ljust(15), 'INTRODUÇÃO À PROGRAMAÇÃO'.center(30), '#'.rjust(15))
     print('#'.ljust(15), ' '.center(30), '#'.rjust(15))
@@ -111,16 +112,20 @@ while tema != '0':
     tema = input('\033[33m{}\033[m, escolha o TEMA para iniciar o jogo: '.format(nome)).upper().strip()
     if tema == '1':
         tema = 'Frutas Nordestinas'
+
     elif tema == '2':
         tema = 'Países Africanos'
+
     elif tema == '3':
         tema = 'Praias Paraibanas'
+
     elif tema == '0':
         print('Opção Escolhida: SAIR DO JOGO')
         print('Jogo encerrando...')
         sleep(0.5)
         print('\033[33mJOGO ENCERRADO\033[m')
         break
+
     else:
         pygame.mixer.init()
         pygame.mixer.music.load('alert.mp3')
@@ -138,6 +143,7 @@ while tema != '0':
     print('TEMA ESCOLHIDO: \033[33m{}\033[m'.format(tema))
     sleep(0.3)
     print()
+
     print('Vamos lá! Bom jogo!')
     pygame.mixer.init()
     pygame.mixer.music.load('lets-go.mp3')
@@ -147,8 +153,10 @@ while tema != '0':
     # condição indica o tema escolhido e abre a lista correspondente, escolhendo uma palavra de forma aleatória. 
     if tema == 'Frutas Nordestinas':
         palavra = choice(frutas).upper()
+
     elif tema == 'Países Africanos':
         palavra = choice(africa).upper()
+
     elif tema == 'Praias Paraibanas':
         palavra = choice(praias).upper()
     
@@ -156,15 +164,24 @@ while tema != '0':
         oculta = ''
         print()
         print('\033[33mPALAVRA:\033[m ', end='')
+
         for letra in palavra:
             oculta += letra if letra in corretas else '_'
         print('\033[33m{}\033[m'.format(oculta))
         print('\nA Palavra tem: \033[33m{} letras\033[m'.format(len(oculta)))   # informa a quantidade de letras que contém na palavra
         
-        palpite = str(input("\n\n{}, qual é o seu palpite? Digite uma letra: ".format(nome))).upper()
+        palpite = str(input('\n\n{}, qual é o seu palpite? Digite uma letra: '.format(nome))).upper().strip()
         
-        # condição que informa que a letra já foi utilizada anteriormente
-        if palpite in digitadas:
+        # condição informando que o caractere digitado não é válido
+        if len(palpite) != 1 or not re.match("[a-zA-ZçÇáéêíóúãõÁÉÊÍÓÚÃÕ]", palpite):
+            pygame.mixer.init()
+            pygame.mixer.music.load('alert.mp3')
+            pygame.mixer.music.play()
+            print('\033[1;36mIsso não é uma letra.\033[m Tente desta vez uma letra')
+            continue   
+        
+        # condição informando que a letra já foi utilizada anteriormente
+        elif palpite in digitadas:
             pygame.mixer.init()
             pygame.mixer.music.load('alert.mp3')
             pygame.mixer.music.play()
@@ -173,18 +190,10 @@ while tema != '0':
             print('Letras digitadas: \033[36m{}\033[m'.format(digitadas))
             continue
         
-        # condição que informa que o caractere digitado não é válido
-        elif palpite not in banco:
-            pygame.mixer.init()
-            pygame.mixer.music.load('alert.mp3')
-            pygame.mixer.music.play()
-            print('\033[1;36mIsso não é uma letra.\033[m Tente desta vez uma letra')
-            continue
-        
         else:
             digitadas.append(palpite)
 
-        # condição que informa o acerto de uma letra
+        # condição informando o acerto de uma letra
         if palpite in palavra:
             corretas.append(palpite)
             pygame.mixer.init()
@@ -199,6 +208,8 @@ while tema != '0':
             for letra in palavra:
                 if letra not in corretas:
                     venceu = False
+
+            # condição que valida os acertos e declara o jogador como vencedor
             if venceu:   
                 pygame.mixer.init()
                 pygame.mixer.music.load('winner.wav')
@@ -241,16 +252,18 @@ while tema != '0':
             print('Letras Erradas: \033[31m{}\033[m'.format(erradas))
             erros += 1
             forca(erros)
-            
+            # condição que contabiliza os erros e informa que o jogador perdeu
             if erros == 6:  
                 pygame.mixer.init()
                 pygame.mixer.music.load('gameover.wav')
                 pygame.mixer.music.play()
                 print('\033[1;31mENFORCADO! Você Perdeu!\033[m')
                 print('PALAVRA era: \033[33m{}\033[m'.format(palavra))
+                
+                #laço para jogar uma nova rodada ou sair do jogo
                 while True:
                     continuar = str(input('\nNova Rodada? [S/N] ')).strip().upper()
-                    if continuar == 'S':
+                    if continuar == 'S':    # nova rodada
                         menu()
                         corretas = []
                         digitadas = []
