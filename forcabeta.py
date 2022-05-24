@@ -19,7 +19,7 @@ with open('banco.txt', encoding='utf_8') as arquivo:
 
 nome = str(input('INFORME SEU NOME: ')).upper().strip()
 
-def desenha_forca(erros):
+def forca(erros):
     print("  _______     ")
     print(" |/      |    ")
 
@@ -236,7 +236,7 @@ while tema != '0':
             print('Letras Corretas: \033[32m{}\033[m'.format(corretas))
             print('Letras Erradas: \033[31m{}\033[m'.format(erradas))
             erros += 1
-            desenha_forca(erros)
+            forca(erros)
             
             if erros == 6:  
                 pygame.mixer.init()
